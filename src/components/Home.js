@@ -1,19 +1,22 @@
 import React from "react";
-import DriverLogin from "./components/DriverLogin";
-import StudentLogin from "./components/StudentLogin";
+import DriverLogin from "./DriverLogin";
+import StudentLogin from "./StudentLogin";
+import './Home.css'; // make sure styles match below
 
-function Home() {
+const Home = () => {
     return (
-        <div>
-            <StudentLogin />
-            <DriverLogin />
-
-
+        <div className="home-wrapper">
+            <h1 className="home-title">College Bus Tracking System</h1>
+            <div className="login-cards-container">
+                <div className="login-card-wrapper">
+                    <DriverLogin />
+                </div>
+                <div className="login-card-wrapper">
+                    <StudentLogin />
+                </div>
+            </div>
         </div>
-        
-        
-        
     );
-}
+};
 
 export default Home;

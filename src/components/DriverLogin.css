@@ -1,48 +1,49 @@
-/* Reset and base */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Base styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.login-container {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   padding: 1rem;
 }
 
+/* Login card */
 .login-card {
-  background-color: #ffffff;
-  padding: 2.5rem 2rem;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   text-align: center;
 }
 
+/* Title */
 .login-title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
   color: #333;
   font-weight: 600;
 }
 
+/* Input */
 .login-input {
   width: 100%;
-  padding: 0.85rem 1rem;
-  margin-bottom: 1.25rem;
-  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
+  border-radius: 10px;
   font-size: 1rem;
-  transition: border 0.3s ease;
+  transition: 0.3s;
 }
 
 .login-input:focus {
@@ -51,35 +52,37 @@ body {
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
 }
 
+/* Button */
 .login-button {
   width: 100%;
-  padding: 0.85rem;
-  background: #007bff;
-  color: white;
+  padding: 0.8rem;
   font-size: 1rem;
+  background: #007bff;
+  color: #fff;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s;
 }
 
 .login-button:hover {
   background: #0056b3;
 }
 
+/* Error text */
 .login-error {
   margin-top: 1rem;
-  color: red;
   font-size: 0.95rem;
+  color: red;
 }
 
-/* Mobile responsiveness */
+/* Responsive */
 @media (max-width: 480px) {
   .login-card {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
   }
 
   .login-title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 }
