@@ -1,0 +1,10 @@
+/* src/styles.css */
+.map-wrapper {
+    height: 400px;
+  }
+  
+  .leaflet-container {
+    height: 100%;
+    width: 100%;
+  }
+  

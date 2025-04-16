@@ -1,0 +1,98 @@
+/* leafletmapcomponent.css */
+
+.bus-map-container {
+    max-width: 850px;
+    margin: 50px auto;
+    padding: 40px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 22px;
+    font-family: 'Poppins', sans-serif;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+  }
+  
+  .bus-map-title {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1f2937;
+    letter-spacing: 0.5px;
+  }
+  
+  .bus-coordinates {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 15px;
+    margin-bottom: 25px;
+    font-size: 20px;
+    background-color: #ecf0f3;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.05);
+  }
+  
+  .bus-coordinates p {
+    margin: 0;
+    font-weight: 500;
+    color: #374151;
+  }
+  
+  .map-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 3px solid #4a90e2;
+    animation: popIn 0.4s ease-out;
+  }
+  
+  .leaflet-container {
+    height: 450px;
+    width: 100%;
+    border-radius: 16px;
+  }
+  
+  /* Animations */
+  @keyframes popIn {
+    from {
+      transform: scale(0.98);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .bus-map-container {
+      padding: 25px;
+      margin: 25px;
+    }
+  
+    .bus-map-title {
+      font-size: 22px;
+    }
+  
+    .bus-coordinates {
+      flex-direction: column;
+      align-items: center;
+      font-size: 16px;
+    }
+  
+    .leaflet-container {
+      height: 350px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .bus-map-container {
+      padding: 20px;
+    }
+  
+    .leaflet-container {
+      height: 300px;
+    }
+  }
+  

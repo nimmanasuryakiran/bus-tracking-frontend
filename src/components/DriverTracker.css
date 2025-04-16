@@ -1,0 +1,40 @@
+/* drivertracker.css */
+
+.driver-tracker-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.driver-tracker-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.driver-tracker-container p {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #444;
+}
+
+@media screen and (max-width: 600px) {
+  .driver-tracker-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .driver-tracker-container h2 {
+    font-size: 20px;
+  }
+
+  .driver-tracker-container p {
+    font-size: 16px;
+  }
+}
