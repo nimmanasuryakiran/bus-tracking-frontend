@@ -7,12 +7,12 @@ import DriverTracker from "./components/DriverTracker";
 import LeafletMapComponent from "./components/LeafletMapComponent";
 import 'leaflet/dist/leaflet.css';
 import "./styles.css";
-
+import Home from "./components/Home";
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<DriverLogin />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/driver-login" element={<DriverLogin />} />
                 <Route path="/driver-tracker" element={
                     <>
@@ -23,6 +23,7 @@ function App() {
                 <Route path="/student-map" element={<StudentMap />} />
                 
             </Routes>
+
         </Router>
         
     );
