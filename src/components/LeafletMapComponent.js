@@ -110,7 +110,7 @@ const LeafletMapComponent = () => {
 
       <div className="map-wrapper">
         <MapContainer
-          key={`${location.latitude}-${location.longitude}`}
+          //key={`${location.latitude}-${location.longitude}`}
           center={[location.latitude, location.longitude]}
           zoom={15}
           scrollWheelZoom={true}
