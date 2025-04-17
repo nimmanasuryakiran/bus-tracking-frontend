@@ -17,7 +17,7 @@ const BusMap = () => {
   // Fetch bus locations from backend
   const fetchBusLocations = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/bus-location");
+      const response = await fetch("https://bus-tracking-backend-c5ao.onrender.com/api/bus-location");
       const data = await response.json();
       setBusLocations(data);
     } catch (error) {
