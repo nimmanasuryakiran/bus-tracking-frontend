@@ -59,7 +59,10 @@ const LeafletMapComponent = () => {
   useEffect(() => {
     fetchLocation(); // Initial fallback fetch
 
-    const socket = new WebSocket(WS_URL);
+    //const socket = new WebSocket(WS_URL);
+    const token = localStorage.getItem("studentToken") || localStorage.getItem("driverToken") || "";
+const socket = new WebSocket(`wss://bus-tracking-backend-c5ao.onrender.com/live-location?token=${token}`);
+
 
     socket.onopen = () => {
       console.log("✅ Student WebSocket connected");

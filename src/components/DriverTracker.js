@@ -56,7 +56,9 @@ const DriverTracker = ({ busId }) => {
                     }
                 },
                 (error) => console.error("🚨 Error getting location:", error),
-                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                { enableHighAccuracy: true, timeout: 20000, maximumAge: 0, distanceFilter: 1 }
+
+                //{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
             );
 
             return () => navigator.geolocation.clearWatch(watchId);
