@@ -5,10 +5,10 @@ const API_URL = "https://bus-tracking-backend-c5ao.onrender.com/bus/location";
 const UPDATE_LOCATION_URL = "https://bus-tracking-backend-c5ao.onrender.com/bus/update-location";
 
 // Student Token (for GET request)
-const STUDENT_JWT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RVREVOVCIsInN1YiI6IjY3OCIsImlhdCI6MTc0NDU0NjI1NywiZXhwIjoxNzQ1MTUxMDU3fQ.qGJQma-ZFj_xcZN_A5dX_i1NO9KhrITK23PoDpTu9MI";  
+const STUDENT_JWT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiU1RVREVOVCIsInN1YiI6IjY3OCIsImlhdCI6MTc0NTIxODk1NCwiZXhwIjoxNzQ1ODIzNzU0fQ.p2i9DejTVhBYFtga3k72M44FiHzc1oT8LgXGDYSSme4";  
 
 // Driver Token (for POST request)
-const DRIVER_JWT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiRFJJVkVSIiwic3ViIjoiNjMwMDY3ODkzMiIsImlhdCI6MTc0NDU0NjMxOSwiZXhwIjoxNzQ1MTUxMTE5fQ.vHdqyWL0ZqY4RcKENHJlRLrVSterLS2rF4P7sr6xeH8";
+const DRIVER_JWT_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiRFJJVkVSIiwic3ViIjoiNjMwMDY3ODkzMiIsImlhdCI6MTc0NTIxOTAwMCwiZXhwIjoxNzQ1ODIzODAwfQ.ObpURdkIH284ZjvZQdkVSAl7ytJTS3KwVLCoPGds_yo";
 
 /**
  * Fetch all bus locations.
