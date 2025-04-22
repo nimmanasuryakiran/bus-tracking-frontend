@@ -1,4 +1,3 @@
-// src/components/LeafletMapComponent.js
 import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -8,7 +7,7 @@ import './LeafletMapComponent.css';
 
 const WS_URL = "wss://bus-tracking-backend-c5ao.onrender.com/live-location";
 
-// Fix marker icons
+// Fix marker icons for Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -17,10 +16,7 @@ L.Icon.Default.mergeOptions({
 });
 
 const LeafletMapComponent = () => {
-  const [location, setLocation] = useState({
-    latitude: 17.385,
-    longitude: 78.4867,
-  });
+  const [location, setLocation] = useState({ latitude: 17.385, longitude: 78.4867 });
   const [error, setError] = useState("");
 
   const markerRef = useRef(null);
@@ -61,7 +57,7 @@ const LeafletMapComponent = () => {
           };
           setLocation(newLocation);
 
-          // Move marker and fly map
+          // Update marker and fly to location
           if (markerRef.current) {
             markerRef.current.setLatLng([newLocation.latitude, newLocation.longitude]);
           }
@@ -78,7 +74,7 @@ const LeafletMapComponent = () => {
     socket.onclose = () => console.warn("WS closed");
 
     return () => socket.close();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error) return <p>❌ {error}</p>;
   if (isNaN(location.latitude) || isNaN(location.longitude)) return <p>📍 Loading map...</p>;
