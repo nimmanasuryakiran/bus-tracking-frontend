@@ -31,7 +31,7 @@ const DriverTracker = ({ busId }) => {
                         longitude: position.coords.longitude,
                         busNumber: busId,
                     };
-                    
+    
     console.log("📤 Sending location with busNumber:", newLocation.busNumber);
 
                     setLocation(newLocation);

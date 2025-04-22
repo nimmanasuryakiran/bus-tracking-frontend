@@ -1,14 +1,12 @@
 // src/components/LeafletMapComponent.js
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import React, { useEffect, useRef, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { getBusLocation } from "../services/busLocationService";
 import "leaflet/dist/leaflet.css";
 import './LeafletMapComponent.css';
 
 const WS_URL = "wss://bus-tracking-backend-c5ao.onrender.com/live-location";
-
-//const WS_URL = "ws://localhost:8080/live-location"; // ✅ WebSocket URL
 
 // Fix marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -18,26 +16,16 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-const ChangeMapView = ({ coords }) => {
-  const map = useMap();
-  useEffect(() => {
-    if (coords?.latitude && coords?.longitude) {
-      console.log("🌀 Flying to new coords", coords);
-      map.flyTo([coords.latitude, coords.longitude], 15);
-    }
-  }, [coords, map]); // Ensure `coords` is updated correctly
-  return null;
-};
-
 const LeafletMapComponent = () => {
   const [location, setLocation] = useState({
-    latitude: 17.385,   // temporary default fallback
+    latitude: 17.385,
     longitude: 78.4867,
   });
-
   const [error, setError] = useState("");
 
-  // Fetch latest location from REST API as fallback
+  const markerRef = useRef(null);
+  const mapRef = useRef(null);
+
   const fetchLocation = async () => {
     try {
       const loc = await getBusLocation("BUS-101");
@@ -46,7 +34,6 @@ const LeafletMapComponent = () => {
           latitude: parseFloat(loc.latitude),
           longitude: parseFloat(loc.longitude),
         };
-        console.log("📦 Location updated via API", parsed);
         setLocation(parsed);
       }
     } catch (err) {
@@ -55,74 +42,71 @@ const LeafletMapComponent = () => {
     }
   };
 
-  // 🔌 WebSocket connection to receive live updates
   useEffect(() => {
-    fetchLocation(); // Initial fallback fetch
+    fetchLocation();
 
     const socket = new WebSocket(WS_URL);
 
     socket.onopen = () => {
-      console.log("✅ Student WebSocket connected");
+      console.log("✅ WebSocket connected");
     };
 
     socket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        console.log("📡 Live location received via WS:", data);
         if (data?.busNumber === "BUS-101") {
-          setLocation({
+          const newLocation = {
             latitude: parseFloat(data.latitude),
             longitude: parseFloat(data.longitude),
-          });
+          };
+          setLocation(newLocation);
+
+          // Move marker and fly map
+          if (markerRef.current) {
+            markerRef.current.setLatLng([newLocation.latitude, newLocation.longitude]);
+          }
+          if (mapRef.current) {
+            mapRef.current.flyTo([newLocation.latitude, newLocation.longitude], 15);
+          }
         }
       } catch (err) {
-        console.error("❌ Error parsing WS message:", err);
+        console.error("WS parse error:", err);
       }
     };
 
-    socket.onerror = (error) => {
-      console.error("🚨 WS error:", error);
-    };
-
-    socket.onclose = () => {
-      console.warn("❌ WS closed");
-    };
+    socket.onerror = (error) => console.error("WS error:", error);
+    socket.onclose = () => console.warn("WS closed");
 
     return () => socket.close();
-  }, []); // Run once when the component mounts
+  }, []);
 
   if (error) return <p>❌ {error}</p>;
-
-  if (isNaN(location.latitude) || isNaN(location.longitude)) {
-    return <p>📍 Bus Location: Loading map...</p>;
-  }
-
-  console.log("📍 Rendering map with location:", location);
+  if (isNaN(location.latitude) || isNaN(location.longitude)) return <p>📍 Loading map...</p>;
 
   return (
     <div className="bus-map-container">
       <h3 className="bus-map-title">📍 Bus Location (BUS-101)</h3>
-
       <div className="bus-coordinates">
         <p>Latitude: {location.latitude.toFixed(5)}</p>
         <p>Longitude: {location.longitude.toFixed(5)}</p>
       </div>
-
       <div className="map-wrapper">
         <MapContainer
-          //key={`${location.latitude}-${location.longitude}`}
           center={[location.latitude, location.longitude]}
           zoom={15}
           scrollWheelZoom={true}
           className="leaflet-container"
           style={{ height: "400px", width: "100%" }}
+          whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
         >
-          <ChangeMapView coords={location} />
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; OpenStreetMap contributors'
           />
-          <Marker position={[location.latitude, location.longitude]}>
+          <Marker
+            position={[location.latitude, location.longitude]}
+            ref={markerRef}
+          >
             <Popup>Bus is here!</Popup>
           </Marker>
         </MapContainer>
