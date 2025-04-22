@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { getBusLocation } from "../services/busLocationService";
@@ -7,7 +7,7 @@ import "./LeafletMapComponent.css";
 
 const WS_URL = "wss://bus-tracking-backend-c5ao.onrender.com/live-location";
 
-// Fix Leaflet marker icon path
+// Fix Leaflet marker icon paths
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -15,7 +15,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-// Custom component to move map view when location updates
+// Component to smoothly move map to new location
 const FlyToLocation = ({ location }) => {
   const map = useMap();
   useEffect(() => {
@@ -30,22 +30,19 @@ const LeafletMapComponent = () => {
   const [location, setLocation] = useState(null);
   const [error, setError] = useState("");
 
-  const markerRef = useRef(null);
-
-  // Fetch location via REST (initial)
+  // Fetch initial location from REST
   const fetchInitialLocation = async () => {
     try {
       const loc = await getBusLocation("BUS-101");
       if (loc?.latitude && loc?.longitude) {
-        const parsed = {
+        setLocation({
           latitude: parseFloat(loc.latitude),
           longitude: parseFloat(loc.longitude),
-        };
-        setLocation(parsed);
+        });
       }
     } catch (err) {
-      console.error("🌐 Polling error:", err);
-      setError("Failed to fetch initial bus location.");
+      console.error("Polling error:", err);
+      setError("Failed to fetch initial location.");
     }
   };
 
@@ -66,19 +63,14 @@ const LeafletMapComponent = () => {
             latitude: parseFloat(data.latitude),
             longitude: parseFloat(data.longitude),
           };
-          setLocation(newLocation);
-
-          // Move marker manually if needed
-          if (markerRef.current) {
-            markerRef.current.setLatLng([newLocation.latitude, newLocation.longitude]);
-          }
+          setLocation(newLocation); // ✅ updates marker + flyTo
         }
       } catch (err) {
-        console.error("WS parse error:", err);
+        console.error("WebSocket parse error:", err);
       }
     };
 
-    socket.onerror = (error) => console.error("WS error:", error);
+    socket.onerror = (error) => console.error("WebSocket error:", error);
     socket.onclose = () => console.warn("WebSocket closed");
 
     return () => socket.close();
@@ -94,7 +86,6 @@ const LeafletMapComponent = () => {
         <p>Latitude: {location.latitude.toFixed(5)}</p>
         <p>Longitude: {location.longitude.toFixed(5)}</p>
       </div>
-
       <div className="map-wrapper">
         <MapContainer
           center={[location.latitude, location.longitude]}
@@ -108,10 +99,7 @@ const LeafletMapComponent = () => {
             attribution='&copy; OpenStreetMap contributors'
           />
           <FlyToLocation location={location} />
-          <Marker
-            position={[location.latitude, location.longitude]}
-            ref={markerRef}
-          >
+          <Marker position={[location.latitude, location.longitude]}>
             <Popup>Bus is here!</Popup>
           </Marker>
         </MapContainer>
