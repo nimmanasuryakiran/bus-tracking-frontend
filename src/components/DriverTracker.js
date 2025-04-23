@@ -68,7 +68,10 @@ const DriverTracker = ({ busId }) => {
 
     // Initialize WebSocket connection
     useEffect(() => {
-        const socket = new WebSocket(WS_URL);
+        //const socket = new WebSocket(WS_URL);
+        const token = localStorage.getItem("driverToken");
+        const socket = new WebSocket(`${WS_URL}?token=${token}`);
+
         socket.onopen = () => console.log("✅ WebSocket connected!");
         socket.onerror = (error) => console.error("🚨 WebSocket error:", error);
         setWs(socket);
