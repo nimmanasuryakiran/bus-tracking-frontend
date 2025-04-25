@@ -1,0 +1,77 @@
+/* AdminDashboard.css */
+.admin-dashboard {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    max-width: 900px;
+    margin: auto;
+    overflow-y: auto;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+  
+  section {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #0056b3;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  @media (max-width: 600px) {
+    .admin-dashboard {
+      padding: 10px;
+    }
+  
+    input, button {
+      font-size: 14px;
+    }
+  
+    section {
+      padding: 15px;
+    }
+  }
+  

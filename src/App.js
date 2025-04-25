@@ -1,5 +1,6 @@
 import React from "react";
 import StudentMap from "./components/StudentMap";
+import AdminDashboard from './components/AdminDashboard';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DriverLogin from "./components/DriverLogin";
@@ -21,7 +22,8 @@ function App() {
                     </>
                 } />
                 <Route path="/student-map" element={<StudentMap />} />
-                
+                <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
             </Routes>
 
         </Router>

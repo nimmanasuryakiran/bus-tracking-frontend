@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { getBusLocation } from "../services/busLocationService";
@@ -29,6 +30,7 @@ const FlyToLocation = ({ location }) => {
 const LeafletMapComponent = () => {
   const [location, setLocation] = useState(null);
   const [error, setError] = useState("");
+  const markerRef = useRef(null);
 
   // Fetch initial location from REST
   const fetchInitialLocation = async () => {
@@ -63,6 +65,9 @@ const LeafletMapComponent = () => {
             latitude: parseFloat(data.latitude),
             longitude: parseFloat(data.longitude),
           };
+          if (markerRef.current) {
+            markerRef.current.setLatLng([newLocation.latitude, newLocation.longitude]);
+          }
           setLocation(newLocation); // ✅ updates marker + flyTo
         }
       } catch (err) {
