@@ -17,24 +17,24 @@ const AdminDashboard = () => {
     'Authorization': `Bearer ${adminToken}`
   };
 
-  const fetchData = () => {
-    fetch('https://your-backend-url/buses', { headers })
-      .then(res => res.json())
-      .then(setBuses)
-      .catch(console.error);
-
-    fetch('https://your-backend-url/routes', { headers })
-      .then(res => res.json())
-      .then(setRoutes)
-      .catch(console.error);
-
-    fetch('https://your-backend-url/drivers', { headers })
-      .then(res => res.json())
-      .then(setDrivers)
-      .catch(console.error);
-  };
-
   useEffect(() => {
+    const fetchData = () => {
+      fetch('https://your-backend-url/buses', { headers })
+        .then(res => res.json())
+        .then(setBuses)
+        .catch(console.error);
+
+      fetch('https://your-backend-url/routes', { headers })
+        .then(res => res.json())
+        .then(setRoutes)
+        .catch(console.error);
+
+      fetch('https://your-backend-url/drivers', { headers })
+        .then(res => res.json())
+        .then(setDrivers)
+        .catch(console.error);
+    };
+
     fetchData();
   }, []);
 
@@ -45,8 +45,8 @@ const AdminDashboard = () => {
       headers,
       body: JSON.stringify(newBus)
     }).then(() => {
-      fetchData();
       setNewBus({ busNumber: '', capacity: '' });
+      window.location.reload();
     });
   };
 
@@ -57,8 +57,8 @@ const AdminDashboard = () => {
       headers,
       body: JSON.stringify(newRoute)
     }).then(() => {
-      fetchData();
       setNewRoute({ routeName: '', stops: '' });
+      window.location.reload();
     });
   };
 
@@ -69,8 +69,8 @@ const AdminDashboard = () => {
       headers,
       body: JSON.stringify(newDriver)
     }).then(() => {
-      fetchData();
       setNewDriver({ name: '', phone: '', licenseNumber: '' });
+      window.location.reload();
     });
   };
 
