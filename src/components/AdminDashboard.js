@@ -3,9 +3,6 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [buses, setBuses] = useState([]);
-  const [routes, setRoutes] = useState([]);
-  const [drivers, setDrivers] = useState([]);
-
   const [newBus, setNewBus] = useState({ busNumber: '', capacity: '' });
   const [newRoute, setNewRoute] = useState({ routeName: '', stops: '' });
   const [newDriver, setNewDriver] = useState({ name: '', phone: '', licenseNumber: '' });
@@ -17,26 +14,17 @@ const AdminDashboard = () => {
     'Authorization': `Bearer ${adminToken}`
   };
 
+  const fetchData = () => {
+    fetch('https://your-backend-url/buses', { headers })
+      .then(res => res.json())
+      .then(setBuses)
+      .catch(console.error);
+  };
+
   useEffect(() => {
-    const fetchData = () => {
-      fetch('https://your-backend-url/buses', { headers })
-        .then(res => res.json())
-        .then(setBuses)
-        .catch(console.error);
-
-      fetch('https://your-backend-url/routes', { headers })
-        .then(res => res.json())
-        .then(setRoutes)
-        .catch(console.error);
-
-      fetch('https://your-backend-url/drivers', { headers })
-        .then(res => res.json())
-        .then(setDrivers)
-        .catch(console.error);
-    };
-
     fetchData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // You can also add `headers` here if you want to silence ESLint the proper way
 
   const handleAddBus = e => {
     e.preventDefault();
@@ -45,8 +33,8 @@ const AdminDashboard = () => {
       headers,
       body: JSON.stringify(newBus)
     }).then(() => {
+      fetchData();
       setNewBus({ busNumber: '', capacity: '' });
-      window.location.reload();
     });
   };
 
@@ -58,7 +46,6 @@ const AdminDashboard = () => {
       body: JSON.stringify(newRoute)
     }).then(() => {
       setNewRoute({ routeName: '', stops: '' });
-      window.location.reload();
     });
   };
 
@@ -70,7 +57,6 @@ const AdminDashboard = () => {
       body: JSON.stringify(newDriver)
     }).then(() => {
       setNewDriver({ name: '', phone: '', licenseNumber: '' });
-      window.location.reload();
     });
   };
 
@@ -78,7 +64,6 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
 
-      {/* View Buses */}
       <section>
         <h2>All Buses</h2>
         <ul>
@@ -88,7 +73,6 @@ const AdminDashboard = () => {
         </ul>
       </section>
 
-      {/* Add Bus */}
       <section>
         <h2>Add New Bus</h2>
         <form onSubmit={handleAddBus}>
@@ -110,7 +94,6 @@ const AdminDashboard = () => {
         </form>
       </section>
 
-      {/* Add Route */}
       <section>
         <h2>Add New Route</h2>
         <form onSubmit={handleAddRoute}>
@@ -132,7 +115,6 @@ const AdminDashboard = () => {
         </form>
       </section>
 
-      {/* Add Driver */}
       <section>
         <h2>Add New Driver</h2>
         <form onSubmit={handleAddDriver}>
